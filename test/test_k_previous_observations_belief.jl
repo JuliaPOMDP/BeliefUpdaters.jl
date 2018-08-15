@@ -59,7 +59,7 @@ pomdp = BabyPOMDP()
 solver = RandomSolver(rng=rng)
 policy = solve(solver, pomdp)
 
-s0 = initial_state(pomdp, rng)
+s0 = initialstate(pomdp, rng)
 hr = HistoryRecorder(rng=rng, max_steps=100)
 o0 = generate_o(pomdp, s0, rng)
 initial_obs_vec = fill(o0, up.k)

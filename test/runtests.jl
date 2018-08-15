@@ -1,5 +1,6 @@
 using Test
 using POMDPs
+using POMDPModelTools
 using BeliefUpdaters
 
 include("test_belief.jl")

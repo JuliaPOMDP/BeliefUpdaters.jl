@@ -10,10 +10,10 @@ The belief is Nullable and is null if there is no observation available.
 """
 struct PreviousObservationUpdater{O} <: Updater end
 
-initialize_belief(u::PreviousObservationUpdater{O}, d::Any, b=nothing) where {O} = Nullable{O}()
-initialize_belief(u::PreviousObservationUpdater{O}, o::O, b=nothing) where {O} = Nullable{O}(o)
+initialize_belief(u::PreviousObservationUpdater{O}, d::Any, b=nothing) where {O} = nothing
+initialize_belief(u::PreviousObservationUpdater{O}, o::O, b=nothing) where {O} = o
 
-update(bu::PreviousObservationUpdater{O}, old_b, action, obs::O, b=nothing) where {O} = Nullable{O}(obs)
+update(bu::PreviousObservationUpdater{O}, old_b, action, obs::O, b=nothing) where {O} = obs
 
 """
 Updater that stores the most recent observation as the belief.

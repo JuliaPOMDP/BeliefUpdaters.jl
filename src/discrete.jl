@@ -19,18 +19,18 @@ end
 function DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)
     if check
         if !isapprox(sum(b), 1.0, atol=0.001)
-            warn("""
-                 b in DiscreteBelief(pomdp, b) does not sum to 1.
-
-                 To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
-                 """)
+            @warn """
+                  b in DiscreteBelief(pomdp, b) does not sum to 1.
+ 
+                  To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
+                  """
         end
         if !all(0.0 <= p <= 1.0 for p in b)
-            warn("""
-                 b in DiscreteBelief(pomdp, b) contains entries outside [0,1].
-
-                 To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
-                 """)
+            @warn """
+                  b in DiscreteBelief(pomdp, b) contains entries outside [0,1].
+ 
+                  To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
+                  """
         end
     end
     return DiscreteBelief(pomdp, ordered_states(pomdp), b)
@@ -60,7 +60,7 @@ end
 
 Base.length(b::DiscreteBelief) = length(b.b)
 
-iterator(b::DiscreteBelief) = b.state_list
+support(b::DiscreteBelief) = b.state_list
 
 ==(b1::DiscreteBelief, b2::DiscreteBelief) = b1.state_list == b2.state_list && b1.b == b2.b
 
@@ -77,7 +77,7 @@ function initialize_belief(bu::DiscreteUpdater, dist::Any)
     ns = length(state_list)
     b = zeros(ns)
     belief = DiscreteBelief(bu.pomdp, state_list, b)
-    for s in iterator(dist)
+    for s in support(dist)
         sidx = state_index(bu.pomdp, s)
         belief.b[sidx] = pdf(dist, s)
     end

@@ -35,7 +35,7 @@ function throw_example(bu::KMarkovUpdater)
     Example:
     ```julia
     up = KMarkovUpdater(5)
-    s0 = initial_state(pomdp, rng)
+    s0 = initialstate(pomdp, rng)
     initial_observation = generate_o(pomdp, s0, rng)
     initial_obs_vec = fill(initial_observation, 5)
     hr = HistoryRecorder(rng=rng, max_steps=100)

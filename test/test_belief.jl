@@ -24,7 +24,7 @@ b1 = uniform_belief(pomdp)
 @test pdf(b1,false) == 0.5
 
 # testing iterator
-@test iterator(b1) == ordered_states(pomdp)
+@test support(b1) == ordered_states(pomdp)
 
 # testing equality (== function)
 b2 = uniform_belief(pomdp)
@@ -41,7 +41,7 @@ b3 = DiscreteBelief(pomdp, [0.0,1.0])
 
 # testing updater initialization
 up = DiscreteUpdater(pomdp)
-isd = initial_state_distribution(pomdp)
+isd = initialstate_distribution(pomdp)
 b4 = initialize_belief(up, isd)
 @test pdf(b4,true) == pdf(isd,true)
 @test pdf(b4,false) == pdf(isd,false)
@@ -68,7 +68,7 @@ b4p = update(up, b4, false, true)
 # Some more tests with tiger problem (old tests, but still work)
 pomdp = TigerPOMDP()
 up = DiscreteUpdater(pomdp)
-bold = initialize_belief(up, initial_state_distribution(pomdp))
+bold = initialize_belief(up, initialstate_distribution(pomdp))
 
 a = 0
 o = true

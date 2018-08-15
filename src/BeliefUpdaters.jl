@@ -1,7 +1,7 @@
 module BeliefUpdaters
 
 using POMDPs
-import POMDPs: Updater, update, initialize_belief, pdf, mode, updater, iterator
+import POMDPs: Updater, update, initialize_belief, pdf, mode, updater, support
 import Base: ==
 import Random
 import Statistics: mean
@@ -10,7 +10,7 @@ using StatsBase
 
 
 export
-    VoidUpdater
+    NothingUpdater
 include("void.jl")
 
 export
@@ -26,5 +26,10 @@ export
     PrimedPreviousObservationUpdater
 
 include("previous_observation.jl")
+
+export
+    KMarkovUpdater
+
+include("k_previous_observations.jl")
 
 end
