@@ -56,20 +56,20 @@ bp = update(up, bp, rand(rng, actions(pomdp)), op)
 
 # test with history recorder
 pomdp = BabyPOMDP()
-solver = RandomSolver(rng=rng)
-policy = solve(solver, pomdp)
-
 s0 = initialstate(pomdp, rng)
-hr = HistoryRecorder(rng=rng, max_steps=100)
 o0 = generate_o(pomdp, s0, rng)
+
 initial_obs_vec = fill(o0, up.k)
-
-hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
-
-@test hist.belief_hist[1] == fill(o0, up.k)
-@test test_hist(hist.belief_hist)
-
-@test_throws ErrorException simulate(hr, pomdp, policy, up)
 @test_throws ErrorException initialize_belief(up, o0)
 @test_throws ErrorException initialize_belief(up, fill(o0, up.k-1))
 @test_throws ErrorException update(up, initial_obs_vec, rand(rng, actions(pomdp)), 1.0)
+
+
+# solver = RandomSolver(rng=rng)
+# policy = solve(solver, pomdp)
+# hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
+# @test hist.belief_hist[1] == fill(o0, up.k)
+# @test test_hist(hist.belief_hist)
+# @test_throws ErrorException simulate(hr, pomdp, policy, up)
+
+
