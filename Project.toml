@@ -1,6 +1,7 @@
 name = "BeliefUpdaters"
 uuid = "449812bc-a0b5-11e8-3863-0db9323dc191"
 authors = ["rejuvyesh <mail@rejuvyesh.com>"]
+version = "0.0.0"
 
 [deps]
 POMDPModelTools = "ddee4e65-a780-5c57-ad17-2363fca24141"
