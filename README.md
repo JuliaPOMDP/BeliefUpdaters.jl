@@ -32,19 +32,18 @@ States sampled from a `DiscreteBelief` will be actual states (of type `statetype
 Beliefs (and updaters) that only deal with the most recent observation
 
 - `PreviousObservationUpdater` maintains a "belief" that is a `Nullable{O}` where `O` is the observation type. The "belief" is null if there is no observation available, and contains the previous observation if there is one.
-- `FastPreviousObservationUpdater` just returns the previous observation when `update` is called. There is no mechanism for representing the case when an observation is not available.
-- `PrimedPreviousObservationUpdater` also returns the previous observation, but if an observation is not available, it returns a default.
 
 #### [`k_previous_observation.jl`](src/beliefs/k_previous_observation.jl)
 `KMarkovUpdater` maintains a "belief" that is a `Vector{O}` where `O` is the observation type. It consists of the last k observations where k is an integer to pass to the constructor of `KMarkovUpdater`. The last observation is at the end of the vector and the oldest one is at the beginning.
 Example:
 ```julia
+using POMDPSimulators
 up = KMarkovUpdater(5)
-s0 = initial_state(pomdp, rng)
-initial_observation = generate_o(pomdp, s0, rng)
-initial_obs_vec = fill(initial_observation, 5)
+s0 = initialstate(pomdp, rng)
+initialobservation = generate_o(pomdp, s0, rng)
+initialobs_vec = fill(initialobservation, 5)
 hr = HistoryRecorder(rng=rng, max_steps=100)
-hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
+hist = simulate(hr, pomdp, policy, up, initialobs_vec, s0)
 ```
 
 #### [`void.jl`](src/beliefs/void.jl)
