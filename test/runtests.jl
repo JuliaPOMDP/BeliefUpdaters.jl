@@ -4,6 +4,10 @@ using POMDPModelTools
 using BeliefUpdaters
 using Random
 
-include("test_belief.jl")
+@testset "belief" begin
+    include("test_belief.jl")
+end
 
-include("test_k_previous_observations_belief.jl")
+@testset "kprevobs" begin
+    include("test_k_previous_observations_belief.jl")
+end
