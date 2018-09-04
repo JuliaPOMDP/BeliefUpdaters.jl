@@ -9,10 +9,10 @@ for problem modeling.
 
 ## Installation
 
-This package requires [POMDPs.jl](https://github.com/JuliaPOMDP). To install this module run the following command:
-
-**TODO**
-
+```julia
+using Pkg
+Pkg.add("BeliefUpdaters")
+```
 
 ## Code structure
 
