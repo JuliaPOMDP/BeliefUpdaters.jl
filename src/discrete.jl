@@ -1,6 +1,6 @@
 # Goals: minimize calls to ordered_states (allocates memory)
 
-# needs pomdp for state_index in pdf(b, s)
+# needs pomdp for stateindex in pdf(b, s)
 # needs list of ordered_states for rand(b)
 
 """
@@ -46,7 +46,7 @@ function uniform_belief(pomdp)
     return DiscreteBelief(pomdp, state_list, ones(ns) / ns)
 end
 
-pdf(b::DiscreteBelief, s) = b.b[state_index(b.pomdp, s)]
+pdf(b::DiscreteBelief, s) = b.b[stateindex(b.pomdp, s)]
 
 function Random.rand(rng::Random.AbstractRNG, b::DiscreteBelief)
     i = sample(rng, Weights(b.b))
@@ -78,7 +78,7 @@ function initialize_belief(bu::DiscreteUpdater, dist::Any)
     b = zeros(ns)
     belief = DiscreteBelief(bu.pomdp, state_list, b)
     for s in support(dist)
-        sidx = state_index(bu.pomdp, s)
+        sidx = stateindex(bu.pomdp, s)
         belief.b[sidx] = pdf(dist, s)
     end
     return belief
