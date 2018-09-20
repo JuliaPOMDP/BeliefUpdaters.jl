@@ -9,6 +9,15 @@
 A belief specified by a probability vector.
 
 Normalization of `b` is NOT enforced at all times, but the `DiscreteBeleif(pomdp, b)` constructor will warn, and `update(...)` always returns a belief with normalized `b`.
+
+Constructor: 
+
+`DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)`
+
+# Fields 
+    - `pomdp` : the POMDP problem  
+    - `state_list` : a vector of ordered states
+    - `b` : the probability vector 
 """
 struct DiscreteBelief{P<:POMDP, S}
     pomdp::P
@@ -38,6 +47,8 @@ end
 
 
 """
+     uniform_belief(pomdp)
+
 Return a DiscreteBelief with equal probability for each state.
 """
 function uniform_belief(pomdp)
@@ -66,6 +77,15 @@ support(b::DiscreteBelief) = b.state_list
 
 Base.hash(b::DiscreteBelief, h::UInt) = hash(b.b, hash(b.state_list, h))
 
+"""
+    DiscreteUpdater
+
+An updater type to update discrete belief using the discrete Bayesian filter.
+
+# Fields
+    - pomdp <: POMDP 
+
+"""
 mutable struct DiscreteUpdater{P<:POMDP} <: Updater
     pomdp::P
 end
