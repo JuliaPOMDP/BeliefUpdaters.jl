@@ -118,7 +118,11 @@
 <h1 id="k-previous-observations">K Previous Observations</h1>
 <p><a id='BeliefUpdaters.KMarkovUpdater' href='#BeliefUpdaters.KMarkovUpdater'>#</a>
 <strong><code>BeliefUpdaters.KMarkovUpdater</code></strong> &mdash; <em>Type</em>.</p>
-<p>Updater that stores the k most recent observations as the belief. Example:</p>
+<pre><code>KMarkovUpdater
+</code></pre>
+
+<p>Updater that stores the k most recent observations as the belief.</p>
+<p>Example:</p>
 <pre><code class="julia">up = KMarkovUpdater(5)
 s0 = initialstate(pomdp, rng)
 initial_observation = generate_o(pomdp, s0, rng)
@@ -127,7 +131,7 @@ hr = HistoryRecorder(rng=rng, max_steps=100)
 hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/JuliaPOMDP/BeliefUpdaters.jl/blob/3a0118ad8e5687c355660bad9766b84b7a5ac6a2/src/k_previous_observations.jl#L1-L12' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/JuliaPOMDP/BeliefUpdaters.jl/blob/dd30477a01317a8dfb4f91575f76ee8c387da3fc/src/k_previous_observations.jl#L1-L16' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>

@@ -22,12 +22,12 @@
         }, 
         {
             "location": "/k_previous_observations/", 
-            "text": "K Previous Observations\n\n\n#\n\n\nBeliefUpdaters.KMarkovUpdater\n \n \nType\n.\n\n\nUpdater that stores the k most recent observations as the belief. Example:\n\n\nup = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = generate_o(pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)\n\n\n\n\nsource", 
+            "text": "K Previous Observations\n\n\n#\n\n\nBeliefUpdaters.KMarkovUpdater\n \n \nType\n.\n\n\nKMarkovUpdater\n\n\n\n\nUpdater that stores the k most recent observations as the belief.\n\n\nExample:\n\n\nup = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = generate_o(pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)\n\n\n\n\nsource", 
             "title": "K previous observations"
         }, 
         {
             "location": "/k_previous_observations/#k-previous-observations", 
-            "text": "#  BeliefUpdaters.KMarkovUpdater     Type .  Updater that stores the k most recent observations as the belief. Example:  up = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = generate_o(pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)  source", 
+            "text": "#  BeliefUpdaters.KMarkovUpdater     Type .  KMarkovUpdater  Updater that stores the k most recent observations as the belief.  Example:  up = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = generate_o(pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)  source", 
             "title": "K Previous Observations"
         }, 
         {
