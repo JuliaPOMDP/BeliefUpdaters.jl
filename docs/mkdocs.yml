@@ -1,6 +1,6 @@
 site_name:        BeliefUpdaters.jl
 repo_url:         https://github.com/JuliaPOMDP/BeliefUpdaters.jl 
-site_description: Interface extensions and tools for POMDPs.jl models and solvers.
+site_description: Collection of default belief representation and belief updaters to be used with POMDPs.jl models and solvers.
 site_authors:     JuliaPOMDP
 
 theme: readthedocs
