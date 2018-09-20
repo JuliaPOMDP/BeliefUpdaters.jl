@@ -1,6 +1,10 @@
 """
+    KMarkovUpdater
+    
 Updater that stores the k most recent observations as the belief.
+
 Example:
+
 ```julia
 up = KMarkovUpdater(5)
 s0 = initialstate(pomdp, rng)
