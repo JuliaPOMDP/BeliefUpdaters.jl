@@ -4,6 +4,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/JuliaPOMDP/BeliefUpdaters.jl/badge.svg?branch=master)](https://coveralls.io/github/JuliaPOMDP/BeliefUpdaters.jl?branch=master)
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaPOMDP.github.io/BeliefUpdaters.jl/stable)
+
 Support tools for POMDPs.jl. This is a supported [JuliaPOMDP](https://github.com/JuliaPOMDP) package that provides tools
 for problem modeling.
 
