@@ -6,7 +6,7 @@
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://JuliaPOMDP.github.io/BeliefUpdaters.jl/latest)
 
-Collection of belief updaters and belief representation for POMDPs.jl. This is a supported [JuliaPOMDP](https://github.com/JuliaPOMDP).
+Collection of belief updaters and belief representation for POMDPs.jl. This is a supported [JuliaPOMDP](https://github.com/JuliaPOMDP) package.
 
 The documentation can be found here: https://juliapomdp.github.io/BeliefUpdaters.jl/latest
 
