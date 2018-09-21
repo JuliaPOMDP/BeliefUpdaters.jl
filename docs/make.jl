@@ -1,9 +1,17 @@
 using Documenter, BeliefUpdaters
 
-makedocs()
+
+makedocs(
+    modules = [BeliefUpdaters],
+    format = :html,
+    sitename = "BeliefUpdaters.jl"
+)
 
 deploydocs(
-           deps = Deps.pip("mkdocs"),
-           repo = "github.com/JuliaPOMDP/BeliefUpdaters.jl",
-           julia = "1.0"
-          )
+    repo = "github.com/JuliaPOMDP/BeliefUpdaters.jl.git",
+    julia = "1.0",
+    osname = "linux",
+    target = "build",
+    deps = nothing,
+    make = nothing
+)
