@@ -93,7 +93,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Previous Observation",
     "title": "BeliefUpdaters.PreviousObservationUpdater",
     "category": "type",
-    "text": "Updater that stores the most recent observation as the belief, missing if none is available.\n\n\n\n\n\n"
+    "text": "Updater that stores the most recent observation as the belief. If an initial distribution is provided, it will pass that as the initial belief.\n\n\n\n\n\n"
 },
 
 {
