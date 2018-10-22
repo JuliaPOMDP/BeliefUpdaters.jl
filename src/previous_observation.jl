@@ -4,7 +4,7 @@
 # policies based on the previous observation only are often pretty good
 # e.g. for the crying baby problem
 """
-Updater that stores the most recent observation as the belief, missing if none is available.
+Updater that stores the most recent observation as the belief. If an initial distribution is provided, it will pass that as the initial belief.
 """
 struct PreviousObservationUpdater <: Updater end
 
