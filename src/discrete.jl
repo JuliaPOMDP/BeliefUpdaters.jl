@@ -10,9 +10,8 @@ A belief specified by a probability vector.
 
 Normalization of `b` is NOT enforced at all times, but the `DiscreteBeleif(pomdp, b)` constructor will warn, and `update(...)` always returns a belief with normalized `b`.
 
-Constructor: 
-
-`DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)`
+# Constructor
+    DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)
 
 # Fields 
 - `pomdp` : the POMDP problem  
@@ -81,6 +80,9 @@ Base.hash(b::DiscreteBelief, h::UInt) = hash(b.b, hash(b.state_list, h))
     DiscreteUpdater
 
 An updater type to update discrete belief using the discrete Bayesian filter.
+
+# Constructor
+    DiscreteUpdater(pomdp::POMDP)
 
 # Fields
 - `pomdp <: POMDP`
