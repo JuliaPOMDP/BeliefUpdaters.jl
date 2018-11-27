@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Discrete",
     "title": "BeliefUpdaters.DiscreteBelief",
     "category": "type",
-    "text": "DiscreteBelief\n\nA belief specified by a probability vector.\n\nNormalization of b is NOT enforced at all times, but the DiscreteBeleif(pomdp, b) constructor will warn, and update(...) always returns a belief with normalized b.\n\nConstructor: \n\nDiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)\n\nFields\n\n- `pomdp` : the POMDP problem  \n- `state_list` : a vector of ordered states\n- `b` : the probability vector\n\n\n\n\n\n"
+    "text": "DiscreteBelief\n\nA belief specified by a probability vector.\n\nNormalization of b is NOT enforced at all times, but the DiscreteBeleif(pomdp, b) constructor will warn, and update(...) always returns a belief with normalized b.\n\nConstructor: \n\nDiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)\n\nFields\n\npomdp : the POMDP problem  \nstate_list : a vector of ordered states\nb : the probability vector \n\n\n\n\n\n"
 },
 
 {
@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Discrete",
     "title": "BeliefUpdaters.DiscreteUpdater",
     "category": "type",
-    "text": "DiscreteUpdater\n\nAn updater type to update discrete belief using the discrete Bayesian filter.\n\nFields\n\n- pomdp <: POMDP\n\n\n\n\n\n"
+    "text": "DiscreteUpdater\n\nAn updater type to update discrete belief using the discrete Bayesian filter.\n\nFields\n\npomdp <: POMDP\n\n\n\n\n\n"
 },
 
 {
