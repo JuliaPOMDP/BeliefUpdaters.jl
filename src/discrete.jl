@@ -15,9 +15,9 @@ Constructor:
 `DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)`
 
 # Fields 
-    - `pomdp` : the POMDP problem  
-    - `state_list` : a vector of ordered states
-    - `b` : the probability vector 
+- `pomdp` : the POMDP problem  
+- `state_list` : a vector of ordered states
+- `b` : the probability vector 
 """
 struct DiscreteBelief{P<:POMDP, S}
     pomdp::P
@@ -83,8 +83,7 @@ Base.hash(b::DiscreteBelief, h::UInt) = hash(b.b, hash(b.state_list, h))
 An updater type to update discrete belief using the discrete Bayesian filter.
 
 # Fields
-    - pomdp <: POMDP 
-
+- `pomdp <: POMDP`
 """
 mutable struct DiscreteUpdater{P<:POMDP} <: Updater
     pomdp::P
