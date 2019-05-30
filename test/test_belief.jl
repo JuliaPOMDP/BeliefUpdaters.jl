@@ -74,5 +74,5 @@ a = 0
 o = true
 bnew = update(up, bold, a, o)
 @test isapprox(bnew.b, [0.15, 0.85])
-@test isapprox(pdf(bnew, 1), 0.15)
-@test isapprox(pdf(bnew, 2), 0.85)
+@test isapprox(pdf(bnew, false), 0.15)
+@test isapprox(pdf(bnew, true), 0.85)
