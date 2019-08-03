@@ -1,8 +1,3 @@
-using POMDPModels
-using Test
-
-# using FIB
-
 pomdp = BabyPOMDP()
 
 # testing constructor
@@ -76,3 +71,8 @@ bnew = update(up, bold, a, o)
 @test isapprox(bnew.b, [0.15, 0.85])
 @test isapprox(pdf(bnew, false), 0.15)
 @test isapprox(pdf(bnew, true), 0.85)
+
+# test mean and mode
+b5 = DiscreteBelief(pomdp, [0.4, 0.6])
+@test @inferred(mean(b5)) == 0.6
+@test @inferred(mode(b5)) == true
