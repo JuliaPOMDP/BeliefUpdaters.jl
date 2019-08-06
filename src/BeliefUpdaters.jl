@@ -3,7 +3,7 @@ module BeliefUpdaters
 using POMDPs
 import POMDPs: Updater, update, initialize_belief, pdf, mode, updater, support
 import Base: ==
-import Statistics: mean
+import Statistics
 using POMDPModelTools
 using StatsBase
 using Random

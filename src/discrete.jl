@@ -8,7 +8,7 @@
 
 A belief specified by a probability vector.
 
-Normalization of `b` is NOT enforced at all times, but the `DiscreteBeleif(pomdp, b)` constructor will warn, and `update(...)` always returns a belief with normalized `b`.
+Normalization of `b` is assumed in some calculations (e.g. pdf), but it is only automatically enforced in `update(...)`, and a warning is given if normalized incorrectly in `DiscreteBeleif(pomdp, b)`.
 
 # Constructor
     DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)
@@ -71,6 +71,9 @@ end
 Base.length(b::DiscreteBelief) = length(b.b)
 
 support(b::DiscreteBelief) = b.state_list
+
+Statistics.mean(b::DiscreteBelief) = sum(b.state_list.*b.b)/sum(b.b)
+StatsBase.mode(b::DiscreteBelief) = b.state_list[argmax(b.b)]
 
 ==(b1::DiscreteBelief, b2::DiscreteBelief) = b1.state_list == b2.state_list && b1.b == b2.b
 
