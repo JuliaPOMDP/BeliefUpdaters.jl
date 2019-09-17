@@ -8,7 +8,7 @@ Example:
 ```julia
 up = KMarkovUpdater(5)
 s0 = initialstate(pomdp, rng)
-initial_observation = generate_o(pomdp, s0, rng)
+initial_observation = gen(DDNVar(:o), pomdp, s0, rng)
 initial_obs_vec = fill(initial_observation, 5)
 hr = HistoryRecorder(rng=rng, max_steps=100)
 hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
@@ -18,24 +18,31 @@ struct KMarkovUpdater <: Updater
     k::Int
 end
 
+# this is a new type because `history(::AbstractVector)` and `currentobs(::AbstractVector)` are too broad
+struct PreviousObservations{K,O} <: AbstractVector{O}
+    storage::NTuple{K,O}
+end
+
+PreviousObservations(v::AbstractVector) = PreviousObservations(tuple(v...))
+
+Base.size(::PreviousObservations{K}) where {K} = (K,)
+Base.getindex(p::PreviousObservations, i::Int) = p.storage[i]
+POMDPs.history(p::PreviousObservations) = collect((o=obs,) for obs in p)
+POMDPs.currentobs(p::PreviousObservations) = p[end]
+
 function initialize_belief(bu::KMarkovUpdater, obs_vec::AbstractVector)
     if length(obs_vec) != bu.k
         error("KMarkovUpdater: The length of the initial observation vector
                does not match the number of observation to stack\n"*throw_example(bu))
     end
-    return obs_vec
+    return PreviousObservations(obs_vec)
 end
 
 function update(bu::KMarkovUpdater, old_b::AbstractVector{O}, action, obs) where {O}
-    obs_stacked = Vector{O}(undef, bu.k)
     if !isa(obs, O)
         error("KMarkovUpdater: Observation did not match previous observation type.\n"*throw_example(bu))
     end
-    for i=1:bu.k-1
-        obs_stacked[i] = old_b[i+1]
-    end
-    obs_stacked[bu.k] = obs
-    return obs_stacked
+    return PreviousObservations((old_b[end-(bu.k-2):end]..., obs))
 end
 
 function initialize_belief(bu::KMarkovUpdater, obs_vec)
@@ -49,7 +56,7 @@ function throw_example(bu::KMarkovUpdater)
     ```julia
     up = KMarkovUpdater(5)
     s0 = initialstate(pomdp, rng)
-    initial_observation = generate_o(pomdp, s0, rng)
+    initial_observation = gen(DDNVar(:o), pomdp, s0, rng)
     initial_obs_vec = fill(initial_observation, 5)
     hr = HistoryRecorder(rng=rng, max_steps=100)
     hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)

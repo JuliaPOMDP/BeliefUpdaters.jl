@@ -42,6 +42,7 @@ bp = update(up, b, rand(rng, actions(pomdp)), o)
 @test bp[end] == o
 @test length(bp) == up.k == 5
 @test bp[1:end-1] == fill(o0, length(bp)-1)
+@test history(bp)[end].o == currentobs(bp)
 
 # check that b is unchanged
 @test b == initialize_belief(up, fill(o0, up.k))
