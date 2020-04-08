@@ -69,7 +69,7 @@ var documenterSearchIndex = {"docs": [
     "page": "K Previous Observations",
     "title": "BeliefUpdaters.KMarkovUpdater",
     "category": "type",
-    "text": "KMarkovUpdater\n\nUpdater that stores the k most recent observations as the belief.\n\nExample:\n\nup = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = gen(DDNVar(:o), pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)\n\n\n\n\n\n"
+    "text": "KMarkovUpdater\n\nUpdater that stores the k most recent observations as the belief.\n\nExample:\n\nup = KMarkovUpdater(5)\ns0 = initialstate(pomdp, rng)\ninitial_observation = gen(DDNNode(:o), pomdp, s0, rng)\ninitial_obs_vec = fill(initial_observation, 5)\nhr = HistoryRecorder(rng=rng, max_steps=100)\nhist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)\n\n\n\n\n\n"
 },
 
 {
