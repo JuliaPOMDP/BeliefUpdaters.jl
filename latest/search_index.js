@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Discrete",
     "title": "BeliefUpdaters.DiscreteBelief",
     "category": "type",
-    "text": "DiscreteBelief\n\nA belief specified by a probability vector.\n\nNormalization of b is assumed in some calculations (e.g. pdf), but it is only automatically enforced in update(...), and a warning is given if normalized incorrectly in DiscreteBeleif(pomdp, b).\n\nConstructor\n\nDiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)\n\nFields\n\npomdp : the POMDP problem  \nstate_list : a vector of ordered states\nb : the probability vector \n\n\n\n\n\n"
+    "text": "DiscreteBelief\n\nA belief specified by a probability vector.\n\nNormalization of b is assumed in some calculations (e.g. pdf), but it is only automatically enforced in update(...), and a warning is given if normalized incorrectly in DiscreteBelief(pomdp, b).\n\nConstructor\n\nDiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)\n\nFields\n\npomdp : the POMDP problem  \nstate_list : a vector of ordered states\nb : the probability vector \n\n\n\n\n\n"
 },
 
 {
