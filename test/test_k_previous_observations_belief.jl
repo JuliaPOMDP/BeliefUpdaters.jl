@@ -57,9 +57,9 @@ bp = update(up, bp, rand(rng, actions(pomdp)), op)
 
 # test with history recorder
 pomdp = BabyPOMDP()
-s0 = rand(rng, initialstate_distribution(pomdp))
-o0 = initialobs(pomdp, s0, rng)
-# o0 = rand(rng, initialobs(pomdp, s0)) # for POMDPs 0.9
+s0 = rand(rng, initialstate(pomdp))
+# o0 = initialobs(pomdp, s0, rng)
+o0 = rand(rng, initialobs(pomdp, s0)) # for POMDPs 0.9
 
 initial_obs_vec = fill(o0, up.k)
 @test_throws ErrorException initialize_belief(up, o0)
@@ -73,5 +73,3 @@ initial_obs_vec = fill(o0, up.k)
 # @test hist.belief_hist[1] == fill(o0, up.k)
 # @test test_hist(hist.belief_hist)
 # @test_throws ErrorException simulate(hr, pomdp, policy, up)
-
-
