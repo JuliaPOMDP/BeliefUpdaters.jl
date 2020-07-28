@@ -7,8 +7,8 @@ Example:
 
 ```julia
 up = KMarkovUpdater(5)
-s0 = initialstate(pomdp, rng)
-initial_observation = gen(DDNNode(:o), pomdp, s0, rng)
+s0 = rand(rng, initialstate(pomdp))
+initial_observation = rand(rng, initialobs(pomdp, s0))
 initial_obs_vec = fill(initial_observation, 5)
 hr = HistoryRecorder(rng=rng, max_steps=100)
 hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
@@ -55,8 +55,8 @@ function throw_example(bu::KMarkovUpdater)
     Example:
     ```julia
     up = KMarkovUpdater(5)
-    s0 = initialstate(pomdp, rng)
-    initial_observation = gen(DDNNode(:o), pomdp, s0, rng)
+    s0 = rand(rng, initialstate(pomdp))
+    initial_observation = rand(rng, initialobs(pomdp, s0))
     initial_obs_vec = fill(initial_observation, 5)
     hr = HistoryRecorder(rng=rng, max_steps=100)
     hist = simulate(hr, pomdp, policy, up, initial_obs_vec, s0)
