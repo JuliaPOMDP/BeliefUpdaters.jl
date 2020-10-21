@@ -1,6 +1,6 @@
 name = "BeliefUpdaters"
 uuid = "8bb6e9a1-7d73-552c-a44a-e5dc5634aac4"
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 POMDPModelTools = "08074719-1b2a-587c-a292-00f91cc44415"
