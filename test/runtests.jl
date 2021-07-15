@@ -4,6 +4,10 @@ using POMDPModelTools
 using BeliefUpdaters
 using POMDPModels
 using Random
+using FiniteHorizonPOMDPs
+import FiniteHorizonPOMDPs: distribution, InStageDistribution, FixedHorizonPOMDPWrapper
+# using FiVI
+using POMDPSimulators
 
 @testset "belief" begin
     include("test_belief.jl")

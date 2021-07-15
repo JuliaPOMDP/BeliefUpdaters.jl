@@ -7,7 +7,7 @@ import Statistics
 using POMDPModelTools
 using StatsBase
 using Random
-
+import FiniteHorizonPOMDPs: HorizonLength, FiniteHorizon, InfiniteHorizon, distribution, stage, stage_stateindex, ordered_stage_states, InStageDistribution
 
 export
     NothingUpdater

@@ -76,3 +76,33 @@ bnew = update(up, bold, a, o)
 b5 = DiscreteBelief(pomdp, [0.4, 0.6])
 @test @inferred(mean(b5)) == 0.6
 @test @inferred(mode(b5)) == true
+
+
+pomdp = fixhorizon(MiniHallway(), 10)
+
+# generates uniform belief over all stages - not wanted for staged finite horizon POMDPs
+# TODO suggestion (at this moment I do not know if this is needed):
+#       define uniform_belief(::FiniteHorizon, pomdp, stage)
+@test_skip uniform_belief(pomdp)
+
+b0 = DiscreteBelief(pomdp, initialstate(pomdp))
+
+@test pdf(b0, (1, 1)) == 1/12
+@test pdf(b0, (13, 1)) == 0.
+
+@test support(b0) == ordered_stage_states(pomdp, 1)
+
+up = DiscreteUpdater(pomdp)
+isd = initialstate_distribution(pomdp) # can be replaced with initialstate when pomdps 0.8 support is dropped
+b1 = initialize_belief(up, isd)
+@test pdf(b1,(2, 1)) == pdf(isd,(2, 1))
+@test pdf(b1,(13, 1)) == pdf(isd,(13, 1))
+
+
+# Run simulation
+# solver = FiVISolver(1, 10)
+# (policy, _) = solve(solver, pomdp)
+#
+# # test that this does not fail
+# @test isapprox(mean([simulate(RolloutSimulator(max_steps = 30), pomdp, policy,
+#             updater(policy), initialstate(pomdp)) for i in 1:10000]), 0.680, atol=1e-2)
