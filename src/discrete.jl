@@ -135,9 +135,7 @@ end
 
 uniform_belief(bu::DiscreteUpdater) = uniform_belief(bu.pomdp)
 
-initialize_belief(bu::DiscreteUpdater, d) = initialize_belief(HorizonLength(bu.pomdp), bu, d)
-
-function initialize_belief(::InfiniteHorizon, bu::DiscreteUpdater, d)
+function initialize_belief(bu::DiscreteUpdater, d)
     state_list = ordered_states(bu.pomdp)
     ns = length(state_list)
     b = zeros(ns)
@@ -149,28 +147,10 @@ function initialize_belief(::InfiniteHorizon, bu::DiscreteUpdater, d)
     return belief
 end
 
-# StageDiscreteBelief(#=construct this with whatever stage the states in d have=#)
-# No reason to distinguish between Staged and not stage DiscreteBelief
-# Generates belief vector for a given stage
-function initialize_belief(::FiniteHorizon, bu::DiscreteUpdater, d::InStageDistribution)
-    state_list = ordered_stage_states(bu.pomdp, stage(d))
-    ns = length(state_list)
-    b = zeros(ns)
-    belief = DiscreteBelief(bu.pomdp, state_list, b)
-    for s in support(d)
-        sidx = stage_stateindex(bu.pomdp, s)
-        belief.b[sidx] = pdf(d, s)
-    end
-    return belief
-end
 
 update(bu::DiscreteUpdater, b::Any, a, o) = update(bu, initialize_belief(bu, b), a, o)
 
 function update(bu::DiscreteUpdater, b::DiscreteBelief, a, o)
-    update(HorizonLength(bu.pomdp), bu::DiscreteUpdater, b::DiscreteBelief, a, o)
-end
-
-function update(::InfiniteHorizon, bu::DiscreteUpdater, b::DiscreteBelief, a, o)
     pomdp = bu.pomdp
     state_space = b.state_list
     bp = zeros(length(state_space))
@@ -207,44 +187,4 @@ function update(::InfiniteHorizon, bu::DiscreteUpdater, b::DiscreteBelief, a, o)
     bp ./= bp_sum
 
     return DiscreteBelief(pomdp, b.state_list, bp)
-end
-
-function update(::FiniteHorizon, bu::DiscreteUpdater, b::DiscreteBelief, a, o)
-    pomdp = bu.pomdp
-    state_space = b.state_list
-    bp = zeros(length(state_space))
-
-    for (si, s) in enumerate(state_space)
-        si = stage_stateindex(pomdp, s)
-
-        if pdf(b, s) > 0.0
-            td = transition(pomdp, s, a)
-
-            for (sp, tp) in weighted_iterator(td)
-                spi = stage_stateindex(pomdp, sp)
-                op = obs_weight(pomdp, s, a, sp, o) # shortcut for observation probability from POMDPModelTools
-
-                bp[spi] += op * tp * b.b[si]
-            end
-        end
-    end
-
-    bp_sum = sum(bp)
-
-    if bp_sum == 0.0
-        error("""
-              Failed discrete belief update: new probabilities sum to zero.
-
-              b = $b
-              a = $a
-              o = $o
-
-              Failed discrete belief update: new probabilities sum to zero.
-              """)
-    end
-
-    # Normalize
-    bp ./= bp_sum
-
-    return DiscreteBelief(pomdp, ordered_stage_states(pomdp, stage(pomdp, o)+1), bp)
 end
