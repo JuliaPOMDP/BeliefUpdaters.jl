@@ -84,7 +84,7 @@ function uniform_staged_belief(pomdp::FiniteHorizonPOMDPs.FHWrapper; st::Int=1)
 end
 
 function uniform_belief(pomdp::FiniteHorizonPOMDPs.FHWrapper)
-    return uniform_staged_belief(pomdp, 1)
+    return uniform_staged_belief(pomdp; st=1)
 end
 
 
@@ -123,7 +123,7 @@ function Base.hash(b::StagedDiscreteBelief, h::UInt)
     hash(b.b, hash(b.state_list, hash(stage(b), h)))
 end
 
-uniform_staged_belief(bu::DiscreteUpdater, st::Int=1) = uniform_staged_belief(bu.pomdp, st)
+uniform_staged_belief(bu::DiscreteUpdater; st::Int=1) = uniform_staged_belief(bu.pomdp; st)
 
 function initialize_belief(bu::DiscreteUpdater, d::FiniteHorizonPOMDPs.InStageDistribution)
     st = FiniteHorizonPOMDPs.stage(d)

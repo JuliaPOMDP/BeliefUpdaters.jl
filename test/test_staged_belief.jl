@@ -2,14 +2,14 @@ pomdp = fixhorizon(BabyPOMDP(), 2)
 
 FiniteHorizonPOMDPs.distribution(initialstate(pomdp))
 
-sdb = StagedDiscreteBelief(pomdp, initialstate(pomdp), false)
+sdb = StagedDiscreteBelief(pomdp, initialstate(pomdp))
 
-@test sdb == StagedDiscreteBelief(pomdp, [1., 0.], 1, false)
+@test sdb == StagedDiscreteBelief(pomdp, [1., 0.], 1)
 
 bu = DiscreteUpdater(pomdp)
 
 # testing equality (== function)
-@test uniform_staged_belief(bu, 1) ==
+@test uniform_staged_belief(bu) ==
     initialize_belief(bu, FiniteHorizonPOMDPs.InStageDistribution(BoolDistribution(0.5), 1))
 
 @test stage(sdb) == 1
@@ -20,12 +20,6 @@ sdb2 = initialize_belief(bu, FiniteHorizonPOMDPs.InStageDistribution(BoolDistrib
 @test pdf(sdb2, (false, 1)) == .5
 
 # rand(sdb2)
-
-# testing constructor
-b0 = DiscreteBelief(pomdp, [0.5,0.5])
-
-@test pdf(b0,true) == 0.5
-@test pdf(b0,false) == 0.5
 
 println("There should be a warning below:")
 StagedDiscreteBelief(pomdp, [0.6, 0.5], 1)
