@@ -7,7 +7,10 @@ import Statistics
 using POMDPModelTools
 using StatsBase
 using Random
-
+using FiniteHorizonPOMDPs
+import FiniteHorizonPOMDPs: HorizonLength, FiniteHorizon, InfiniteHorizon,
+                distribution, stage, stage_stateindex, ordered_stage_states,
+                InStageDistribution, FHWrapper
 
 export
     NothingUpdater
@@ -19,6 +22,12 @@ export
     uniform_belief
 
 include("discrete.jl")
+
+export
+    StagedDiscreteBelief,
+    uniform_staged_belief
+
+include("staged_discrete.jl")
 
 export
     PreviousObservationUpdater,

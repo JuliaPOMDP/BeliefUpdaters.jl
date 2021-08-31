@@ -24,7 +24,13 @@ struct DiscreteBelief{P<:POMDP, S}
     b::Vector{Float64}
 end
 
-function DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)
+
+function DiscreteBelief(pomdp, b; check::Bool=true)
+    DiscreteBelief(HorizonLength(pomdp), pomdp, b, check)
+end
+
+
+function DiscreteBelief(::InfiniteHorizon, pomdp, b::Vector{Float64}, check::Bool)
     if check
         if !isapprox(sum(b), 1.0, atol=0.001)
             @warn """
@@ -45,6 +51,28 @@ function DiscreteBelief(pomdp, b::Vector{Float64}; check::Bool=true)
 end
 
 
+function DiscreteBelief(::FiniteHorizon, pomdp, d::InStageDistribution, check::Bool)
+    b = distribution(d).probs
+    if check
+        if !isapprox(sum(b), 1.0, atol=0.001)
+            @warn """
+                  b in DiscreteBelief(pomdp, b) does not sum to 1.
+
+                  To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
+                  """
+        end
+        if !all(0.0 <= p <= 1.0 for p in b)
+            @warn """
+                  b in DiscreteBelief(pomdp, b) contains entries outside [0,1].
+
+                  To suppress this warning use `DiscreteBelief(pomdp, b, check=false)`
+                  """
+        end
+    end
+    return DiscreteBelief(pomdp, ordered_stage_states(pomdp, stage(d)), b)
+end
+
+
 """
      uniform_belief(pomdp)
 
@@ -56,7 +84,18 @@ function uniform_belief(pomdp)
     return DiscreteBelief(pomdp, state_list, ones(ns) / ns)
 end
 
-pdf(b::DiscreteBelief, s) = b.b[stateindex(b.pomdp, s)]
+# TODO suggestion: If we find that uniform_belief is necessarry for staged DiscreteBeliefs,
+# we can add uniform_belief(pomdp) which creates DiscreteBelief for first stage
+# or define new uniform_bleief(pomdp, stage) for a given stage
+# Something like:
+# uniform_belief(::FiniteHorizon, pomdp, stage) {...}
+# uniform_belief(::FiniteHorizon, pomdp) = uniform_belief(::FiniteHorizon, pomdp, 1)
+# uniform_belief(pomdp) = uniform_belief(HorizonLength(pomdp), pomdp, 1)
+# uniform_belief(pomdp, stage) = uniform_belief(HorizonLength(pomdp), pomdp, stage)
+
+pdf(b::DiscreteBelief, s) = pdf(HorizonLength(b.pomdp), b, s)
+pdf(::FiniteHorizon, b::DiscreteBelief, s) = b.b[stage_stateindex(b.pomdp, s)]
+pdf(::InfiniteHorizon, b::DiscreteBelief, s) = b.b[stateindex(b.pomdp, s)]
 
 function Random.rand(rng::Random.AbstractRNG, b::DiscreteBelief)
     i = sample(rng, Weights(b.b))
@@ -94,19 +133,22 @@ mutable struct DiscreteUpdater{P<:POMDP} <: Updater
     pomdp::P
 end
 
-uniform_belief(up::DiscreteUpdater) = uniform_belief(up.pomdp)
+uniform_belief(bu::DiscreteUpdater) = uniform_belief(bu.pomdp)
 
-function initialize_belief(bu::DiscreteUpdater, dist::Any)
+function initialize_belief(bu::DiscreteUpdater, d)
     state_list = ordered_states(bu.pomdp)
     ns = length(state_list)
     b = zeros(ns)
     belief = DiscreteBelief(bu.pomdp, state_list, b)
-    for s in support(dist)
+    for s in support(d)
         sidx = stateindex(bu.pomdp, s)
-        belief.b[sidx] = pdf(dist, s)
+        belief.b[sidx] = pdf(d, s)
     end
     return belief
 end
+
+
+update(bu::DiscreteUpdater, b::Any, a, o) = update(bu, initialize_belief(bu, b), a, o)
 
 function update(bu::DiscreteUpdater, b::DiscreteBelief, a, o)
     pomdp = bu.pomdp
@@ -146,5 +188,3 @@ function update(bu::DiscreteUpdater, b::DiscreteBelief, a, o)
 
     return DiscreteBelief(pomdp, b.state_list, bp)
 end
-
-update(bu::DiscreteUpdater, b::Any, a, o) = update(bu, initialize_belief(bu, b), a, o)
