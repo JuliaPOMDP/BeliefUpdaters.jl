@@ -1,5 +1,24 @@
 module BeliefUpdaters
 
+Base.depwarn("""
+             The functionality in BeliefUpdaters has been moved to POMDPTools.
+
+             Please simply replace `using BeliefUpdaters` with `using POMDPTools`.
+             """, :BeliefUpdaters)
+
+using POMDPTools.BeliefUpdaters
+
+export
+    NothingUpdater,
+    DiscreteBelief,
+    DiscreteUpdater,
+    uniform_belief,
+    PreviousObservationUpdater,
+    FastPreviousObservationUpdater,
+    PrimedPreviousObservationUpdater,
+    KMarkovUpdater
+
+#=
 using POMDPs
 import POMDPs: Updater, update, initialize_belief, pdf, mode, updater, support
 import Base: ==
@@ -31,5 +50,6 @@ export
     KMarkovUpdater
 
 include("k_previous_observations.jl")
+=#
 
 end
